@@ -83,4 +83,8 @@
     </string>
     <string name="enter_user_e_mail">Enter user e-mail</string>
 
+    <!--Facebook login-->
+    <string name="facebook_app_id">486495425250384</string>
+    <string name="fb_login_protocol_scheme">fb486495425250384</string>
+
 </resources>
