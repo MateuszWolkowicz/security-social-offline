@@ -114,6 +114,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmPasswordHolderView" />
 
+        <CheckBox
+            android:id="@+id/cb_offline_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="0dp"
+            android:checked="false"
+            android:layoutDirection="rtl"
+            android:text="@string/add_offline_password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/allowFingerprintView" />
+
         <TextView
             android:id="@+id/singUpHintView"
             android:layout_width="0dp"
@@ -140,7 +156,7 @@
             android:text="@string/sign_up_action_done"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/allowFingerprintView" />
+            app:layout_constraintTop_toBottomOf="@+id/cb_offline_password" />
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"

@@ -39,6 +39,8 @@ class SignUpActivity : BaseSecureActivity() {
     }
 
     private fun initViews() {
+        cb_offline_password.makeVisible()
+        cb_offline_password.isChecked = true
         appTitleView.text = getString(R.string.app_name) + " " + getString(R.string.registration)
         confirmPasswordView.setOnEditorActionListener { _, id, _ -> onEditorActionClick(id) }
         doneView.setOnClickListener { attemptToSignUp() }
