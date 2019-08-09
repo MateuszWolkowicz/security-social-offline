@@ -126,6 +126,10 @@ dependencies {
     implementation "com.github.scottyab:safetynethelper:$safetynethelper_version"
     implementation "com.google.code.gson:gson:$gson_version"
     implementation "com.facebook.android:facebook-login:$facebooksdk_version"
+
+    //Android Kotlin Extensions - Mateusz Wolkowicz
+    implementation "com.github.MateuszWolkowicz:androidExtensions:$mateuszwolkowicz_extensions_version"
+
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "com.android.support.test:runner:$test_runner_version"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$test_espresso_version"

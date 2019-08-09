@@ -8,17 +8,13 @@ import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
-import com.wolkowiczmateusz.securitysocialoffline.authentication.EncryptionServices
-import com.wolkowiczmateusz.securitysocialoffline.authentication.SystemServices
-import com.wolkowiczmateusz.securitysocialoffline.extentions.hideKeyboard
 import com.wolkowiczmateusz.securitysocialoffline.extentions.startHomeActivity
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import android.content.Intent
 import com.facebook.AccessToken
-import com.wolkowiczmateusz.securitysocialoffline.extentions.makeGone
-import com.wolkowiczmateusz.securitysocialoffline.extentions.makeVisible
+import com.wolkowiczmateusz.androidextensions.makeGone
+import com.wolkowiczmateusz.androidextensions.makeVisible
 import com.wolkowiczmateusz.securitysocialoffline.extentions.startSignUpActivity
-import kotlinx.android.synthetic.main.activity_add_secret.*
 
 /**
  * Sign up with password screen.
