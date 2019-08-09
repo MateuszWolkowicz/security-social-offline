@@ -27,12 +27,13 @@
     <string name="home_menu_reset">Reset</string>
     <string name="home_menu_fingerprint">Use fingerprint</string>
 
-    <!-- Strings related to sign up -->
+    <!-- Strings related to sign up and sign in -->
     <string name="sign_up_activity_title">Sign Up</string>
     <string name="sign_up_prompt_password">Enter password</string>
     <string name="sign_up_prompt_confirm_password">Confirm password</string>
     <string name="sign_up_action_done">Done</string>
     <string name="sign_up_action_done_short">Done</string>
+    <string name="sign_in_activity_title">Sign Inp</string>
 
     <string name="sign_up_error_invalid_password">Password is too short</string>
     <string name="sign_up_error_incorrect_password">Password is incorrect</string>
@@ -86,5 +87,10 @@
     <!--Facebook login-->
     <string name="facebook_app_id">486495425250384</string>
     <string name="fb_login_protocol_scheme">fb486495425250384</string>
+    <string name="register">Register</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="empty_user_name">User name is empty</string>
+    <string name="password_empty">Password id empty</string>
+    <string name="registration">Registration</string>
 
 </resources>

@@ -1,7 +1,6 @@
 package com.wolkowiczmateusz.securitysocialoffline
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -12,18 +11,19 @@ import com.facebook.login.LoginResult
 import com.wolkowiczmateusz.securitysocialoffline.authentication.EncryptionServices
 import com.wolkowiczmateusz.securitysocialoffline.authentication.SystemServices
 import com.wolkowiczmateusz.securitysocialoffline.extentions.hideKeyboard
-import com.wolkowiczmateusz.securitysocialoffline.extentions.openSecuritySettings
 import com.wolkowiczmateusz.securitysocialoffline.extentions.startHomeActivity
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import android.content.Intent
 import com.facebook.AccessToken
+import com.wolkowiczmateusz.securitysocialoffline.extentions.makeGone
 import com.wolkowiczmateusz.securitysocialoffline.extentions.makeVisible
-import com.wolkowiczmateusz.securitysocialoffline.extentions.startSignInActivity
+import com.wolkowiczmateusz.securitysocialoffline.extentions.startSignUpActivity
+import kotlinx.android.synthetic.main.activity_add_secret.*
 
 /**
  * Sign up with password screen.
  */
-class SignUpActivity : BaseSecureActivity() {
+class SignInActivity : BaseSecureActivity() {
 
     private var callbackManager: CallbackManager? = null
 
@@ -39,17 +39,19 @@ class SignUpActivity : BaseSecureActivity() {
     }
 
     private fun initViews() {
-        appTitleView.text = getString(R.string.app_name) + " " + getString(R.string.registration)
+        confirmPasswordView.makeGone()
+        btn_signUp.makeVisible()
+        singUpHintView.makeGone()
+        allowFingerprintView.makeGone()
         confirmPasswordView.setOnEditorActionListener { _, id, _ -> onEditorActionClick(id) }
-        doneView.setOnClickListener { attemptToSignUp() }
-
-        if (systemServices.isFingerprintHardwareAvailable()) {
-            allowFingerprintView.makeVisible()
-        }
-        allowFingerprintView.setOnCheckedChangeListener { _, checked -> onAllowFingerprint(checked) }
+        doneView.setOnClickListener { attemptToSignIn() }
 
         login_button.setPermissions(listOf(EMAIL))
         // If you are using in a fragment, call loginButton.setFragment(this);
+
+        btn_signUp.setOnClickListener {
+            startSignUpActivity()
+        }
 
         // Callback registration
         login_button.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
@@ -71,6 +73,8 @@ class SignUpActivity : BaseSecureActivity() {
         if (isLoggedIn) {
             startHomeActivity()
         }
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -78,18 +82,9 @@ class SignUpActivity : BaseSecureActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun onAllowFingerprint(checked: Boolean) {
-        if (checked && !systemServices.hasEnrolledFingerprints()) {
-            allowFingerprintView.isChecked = false
-            Snackbar.make(signUpRootView, R.string.sign_up_snack_message, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.sign_up_snack_action, { openSecuritySettings() })
-                    .show()
-        }
-    }
-
     private fun onEditorActionClick(id: Int): Boolean = when (id) {
         EditorInfo.IME_ACTION_DONE, EditorInfo.IME_NULL -> {
-            attemptToSignUp()
+            attemptToSignIn()
             true
         }
         else -> false
@@ -99,65 +94,44 @@ class SignUpActivity : BaseSecureActivity() {
      * Attempts to sign up with password specified by the sing up form.
      * If there are form errors errors are presented and no actual sing up attempt is made.
      */
-    private fun attemptToSignUp() {
+    private fun attemptToSignIn() {
         passwordHolderView.error = null
         confirmPasswordHolderView.error = null
+        usernameHolderView.error = null
 
         val passwordString = passwordView.text.toString()
-        val confirmPasswordString = confirmPasswordView.text.toString()
+        val userNameString = userNameView.text.toString()
 
         var cancel = false
         var focusView: View? = null
+
+
+        if (userNameString.isEmpty()) {
+            usernameHolderView.error = getString(R.string.empty_user_name)
+            focusView = userNameView
+            cancel = true
+        }
 
         if (!isPasswordValid(passwordString)) {
             passwordHolderView.error = getString(R.string.sign_up_error_invalid_password)
             focusView = passwordView
             cancel = true
-        } else if (passwordString != confirmPasswordString) {
-            confirmPasswordHolderView.error = getString(R.string.sign_up_error_incorrect_password)
-            focusView = confirmPasswordView
+        }
+
+        if (passwordString.isEmpty() ) {
+            passwordHolderView.error = getString(R.string.password_empty)
+            focusView = passwordView
             cancel = true
         }
 
         if (cancel) {
             focusView?.requestFocus()
         } else {
-            createKeys(passwordString, allowFingerprintView.isChecked)
-
-            with(Storage(this)) {
-                val encryptedPassword = EncryptionServices(applicationContext).encrypt(passwordString, passwordString)
-                logi("Original password is: $passwordString")
-                logi("Saved password is: $encryptedPassword")
-
-                savePassword(encryptedPassword)
-                saveFingerprintAllowed(allowFingerprintView.isChecked)
-            }
-            focusView?.hideKeyboard()
 
             startHomeActivity()
         }
     }
 
 
-    /**
-     * Create master, fingerprint and confirm credentials keys.
-     */
-    private fun createKeys(password: String, isFingerprintAllowed: Boolean) {
-        val encryptionService = EncryptionServices(applicationContext)
-        encryptionService.createMasterKey(password)
-
-        if (SystemServices.hasMarshmallow()) {
-            if (isFingerprintAllowed && systemServices.hasEnrolledFingerprints()) {
-                encryptionService.createFingerprintKey()
-            }
-            encryptionService.createConfirmCredentialsKey()
-        }
-    }
-
     private fun isPasswordValid(password: String) = !TextUtils.isEmpty(password) && password.length >= 6
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        startSignInActivity()
-    }
 }

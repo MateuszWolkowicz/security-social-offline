@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.wolkowiczmateusz.securitysocialoffline.BuildConfig.IS_SAFETY_NET_ENABLED
 import com.wolkowiczmateusz.securitysocialoffline.extentions.startHomeActivity
+import com.wolkowiczmateusz.securitysocialoffline.extentions.startSignInActivity
 import com.wolkowiczmateusz.securitysocialoffline.extentions.startSignUpActivity
 import com.wolkowiczmateusz.securitysocialoffline.safetynet.SafetyNet
 import kotlinx.android.synthetic.main.activity_splash.*
+import kotlin.system.exitProcess
 
 class SplashActivity : AppCompatActivity(), SafetyNet.SafetyNetHolder {
     companion object {
@@ -43,7 +45,7 @@ class SplashActivity : AppCompatActivity(), SafetyNet.SafetyNetHolder {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        System.exit(0)
+        exitProcess(0)
     }
 
     override fun onSafetyNetCheckStarted() {
@@ -58,5 +60,5 @@ class SplashActivity : AppCompatActivity(), SafetyNet.SafetyNetHolder {
 
     private fun showNextActivityDelayed() = handler.postDelayed({ showNextActivity() }, HOME_SCREEN_START_DELAY)
 
-    private fun showNextActivity() = if (Storage(this).isPasswordSaved()) startHomeActivity() else startSignUpActivity()
+    private fun showNextActivity() = if (Storage(this).isPasswordSaved()) startHomeActivity() else startSignInActivity()
 }

@@ -10,11 +10,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import com.facebook.AccessToken
+import com.facebook.AccessTokenTracker
+import com.facebook.login.LoginManager
 import com.wolkowiczmateusz.securitysocialoffline.authentication.AuthenticationDialog
 import com.wolkowiczmateusz.securitysocialoffline.authentication.AuthenticationDialog.Stage.*
 import com.wolkowiczmateusz.securitysocialoffline.authentication.EncryptionServices
 import com.wolkowiczmateusz.securitysocialoffline.extentions.openSecuritySettings
+import com.wolkowiczmateusz.securitysocialoffline.extentions.startHomeActivity
 import com.wolkowiczmateusz.securitysocialoffline.extentions.startSecretActivity
+import com.wolkowiczmateusz.securitysocialoffline.extentions.startSignInActivity
 import com.wolkowiczmateusz.securitysocialoffline.extentions.startSignUpActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -28,6 +33,7 @@ class HomeActivity : BaseSecureActivity() {
 
     private val storage: Storage by lazy(LazyThreadSafetyMode.NONE) { Storage(applicationContext) }
     private var isAuthenticating = false
+    private lateinit var accessTokenTracker: AccessTokenTracker
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,14 +48,38 @@ class HomeActivity : BaseSecureActivity() {
         secretsView.adapter = SecretsAdapter(secrets) { onSecretClick(it) }
 
         emptyView.visibility = if (secrets.isEmpty()) View.VISIBLE else View.GONE
+        initSocialTokenListener()
+    }
+
+    private fun initSocialTokenListener() {
+        accessTokenTracker = object : AccessTokenTracker() {
+
+            override fun onCurrentAccessTokenChanged(
+                    oldAccessToken: AccessToken,
+                    currentAccessToken: AccessToken?) {
+                if (currentAccessToken == null) {
+                    startSignInActivity()
+                }
+
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        if (!isAuthenticating && !EncryptionServices(applicationContext).validateConfirmCredentialsAuthentication()) {
+        var areCredentialsAuthenticated = EncryptionServices(applicationContext).validateConfirmCredentialsAuthentication()
+        val accessToken = AccessToken.getCurrentAccessToken()
+        val isLoggedIn = accessToken != null && !accessToken.isExpired
+
+        if (isLoggedIn) {
+            areCredentialsAuthenticated =  true
+        }
+
+        if (!isAuthenticating && !areCredentialsAuthenticated) {
             isAuthenticating = true
             systemServices.showAuthenticationScreen(this, AUTHENTICATION_SCREEN_CODE)
         }
+        accessTokenTracker.startTracking()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -90,13 +120,22 @@ class HomeActivity : BaseSecureActivity() {
     }
 
     private fun onResetClick() {
+        logoutOfflineCredentials()
+        logoutSocialCredentials()
+        startSignInActivity()
+    }
+
+    private fun logoutSocialCredentials() {
+        LoginManager.getInstance().logOut()
+    }
+
+    private fun logoutOfflineCredentials() {
         val encryptionServices = EncryptionServices(applicationContext)
         encryptionServices.removeMasterKey()
         encryptionServices.removeFingerprintKey()
         encryptionServices.removeConfirmCredentialsKey()
 
         Storage(baseContext).clear()
-        startSignUpActivity()
     }
 
     private fun onUseFingerprintClick(item: MenuItem) {
@@ -164,5 +203,10 @@ class HomeActivity : BaseSecureActivity() {
         dialog.authenticationSuccessListener = { startSecretActivity(ADD_SECRET_REQUEST_CODE, password = it) }
         dialog.passwordVerificationListener = { validatePassword(it) }
         dialog.show(supportFragmentManager, "Authentication")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        accessTokenTracker.stopTracking()
     }
 }

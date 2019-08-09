@@ -62,11 +62,11 @@ class AuthenticationDialog : AppCompatDialogFragment(), AuthenticationFingerprin
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.dialog_fingerprint_container, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog.setTitle(getString(R.string.authentication_title))
         cancelButtonView.setOnClickListener { dismiss() }
@@ -75,7 +75,7 @@ class AuthenticationDialog : AppCompatDialogFragment(), AuthenticationFingerprin
 
         if (SystemServices.hasMarshmallow()) {
             authenticationFingerprint = AuthenticationFingerprint(
-                    SystemServices(context.applicationContext),
+                    SystemServices(context!!.applicationContext),
                     AuthenticationFingerprintView(fingerprintIconView, fingerprintStatusView), this)
         }
 
