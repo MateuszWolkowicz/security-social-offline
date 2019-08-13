@@ -108,13 +108,6 @@ android {
     }
 }
 
-configurations.all {
-//    resolutionStrategy {
-//        force "com.google.android.gms:play-services-base:$gms_version"
-//        force "com.google.android.gms:play-services-safetynet:$gms_version"
-//    }
-}
-mateuszwolkowicz_extensions_version
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
