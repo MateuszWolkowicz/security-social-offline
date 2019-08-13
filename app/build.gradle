@@ -109,17 +109,19 @@ android {
 }
 
 configurations.all {
-    resolutionStrategy {
-        force "com.google.android.gms:play-services-base:$gms_version"
-        force "com.google.android.gms:play-services-safetynet:$gms_version"
-    }
+//    resolutionStrategy {
+//        force "com.google.android.gms:play-services-base:$gms_version"
+//        force "com.google.android.gms:play-services-safetynet:$gms_version"
+//    }
 }
-
+mateuszwolkowicz_extensions_version
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:support-media-compat:$support_version"
+    implementation "com.android.support:support-v4:$support_version"
     implementation "com.android.support:customtabs:$support_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
     implementation "com.google.android.gms:play-services-base:$gms_version"
