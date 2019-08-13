@@ -1,6 +1,6 @@
 package com.wolkowiczmateusz.securitysocialoffline
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.wolkowiczmateusz.securitysocialoffline.extentions.inflate
@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 
 class SecretsAdapter(
         private var secrets: List<Storage.SecretData>,
-        private val listener: (Storage.SecretData) -> Unit) : RecyclerView.Adapter<SecretsAdapter.Holder>() {
+        private val listener: (Storage.SecretData) -> Unit) : androidx.recyclerview.widget.RecyclerView.Adapter<SecretsAdapter.Holder>() {
 
     private val dateFormatter = SimpleDateFormat.getDateInstance(DateFormat.MEDIUM)
 
@@ -25,7 +25,7 @@ class SecretsAdapter(
         notifyDataSetChanged()
     }
 
-    class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class Holder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         fun bind(item: Storage.SecretData, listener: (Storage.SecretData) -> Unit, dateFormatter: DateFormat) = with(itemView) {
             titleView.text = item.alias
             dateView.text = dateFormatter.format(item.createDate)

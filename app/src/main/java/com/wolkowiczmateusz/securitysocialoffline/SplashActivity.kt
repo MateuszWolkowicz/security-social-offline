@@ -3,7 +3,7 @@ package com.wolkowiczmateusz.securitysocialoffline
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import com.wolkowiczmateusz.securitysocialoffline.BuildConfig.IS_SAFETY_NET_ENABLED
 import com.wolkowiczmateusz.securitysocialoffline.extentions.startHomeActivity

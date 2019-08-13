@@ -1,7 +1,7 @@
 package com.wolkowiczmateusz.securitysocialoffline
 
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.wolkowiczmateusz.securitysocialoffline.authentication.SystemServices
 
 open class BaseSecureActivity : AppCompatActivity() {

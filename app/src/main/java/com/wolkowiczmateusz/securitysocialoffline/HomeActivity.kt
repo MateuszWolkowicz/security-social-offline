@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -44,7 +44,7 @@ class HomeActivity : BaseSecureActivity() {
         val secrets = Storage(baseContext).getSecrets()
 
         addSecretView.setOnClickListener { onAddSecretClick() }
-        secretsView.layoutManager = LinearLayoutManager(baseContext)
+        secretsView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(baseContext)
         secretsView.adapter = SecretsAdapter(secrets) { onSecretClick(it) }
 
         emptyView.visibility = if (secrets.isEmpty()) View.VISIBLE else View.GONE
@@ -86,7 +86,7 @@ class HomeActivity : BaseSecureActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_SECRET_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             (secretsView.adapter as SecretsAdapter).update(Storage(baseContext).getSecrets())
-            emptyView.visibility = if (secretsView.adapter.itemCount > 0) View.GONE else View.VISIBLE
+            emptyView.visibility = if ((secretsView.adapter as SecretsAdapter).itemCount > 0) View.GONE else View.VISIBLE
         } else if (requestCode == AUTHENTICATION_SCREEN_CODE) {
             isAuthenticating = false
             if (resultCode != Activity.RESULT_OK) {

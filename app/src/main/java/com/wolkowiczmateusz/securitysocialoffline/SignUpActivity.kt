@@ -1,7 +1,7 @@
 package com.wolkowiczmateusz.securitysocialoffline
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -17,7 +17,7 @@ import com.wolkowiczmateusz.securitysocialoffline.extentions.startHomeActivity
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import android.content.Intent
 import com.facebook.AccessToken
-import com.wolkowiczmateusz.securitysocialoffline.extentions.makeVisible
+import com.wolkowiczmateusz.androidextensions.makeVisible
 import com.wolkowiczmateusz.securitysocialoffline.extentions.startSignInActivity
 
 /**
@@ -75,7 +75,7 @@ class SignUpActivity : BaseSecureActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager!!.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }

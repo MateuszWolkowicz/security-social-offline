@@ -12,7 +12,7 @@
     tools:context=".SignUpActivity">
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -29,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:visibility="gone"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/usernameHolderView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userNameView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,10 +49,10 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordHolderView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,9 +72,9 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/confirmPasswordHolderView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPasswordView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
             android:id="@+id/allowFingerprintView"
@@ -194,5 +194,5 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/usernameHolderView"
             app:layout_constraintStart_toStartOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -3,8 +3,8 @@ package com.wolkowiczmateusz.securitysocialoffline.authentication
 import android.content.Context
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AppCompatDialogFragment
+import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AppCompatDialogFragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
